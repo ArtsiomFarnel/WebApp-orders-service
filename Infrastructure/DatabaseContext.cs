@@ -4,5 +4,6 @@ namespace Infrastructure
 {
     public class DatabaseContext
     {
+        // MongoDB
     }
 }
