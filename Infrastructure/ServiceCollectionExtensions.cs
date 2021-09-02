@@ -2,8 +2,7 @@
 
 namespace Infrastructure
 {
-    public class DatabaseContext
+    public class ServiceCollectionExtensions
     {
-        // MongoDB
     }
 }
