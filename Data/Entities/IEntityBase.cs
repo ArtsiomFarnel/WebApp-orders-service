@@ -6,6 +6,6 @@ namespace Data.Entities
 {
     public interface IEntityBase
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }
