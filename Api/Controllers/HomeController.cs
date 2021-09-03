@@ -23,7 +23,7 @@ namespace Api.Controllers
         public ActionResult<List<Order>> Get() =>
             _orderService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetOrder")]
+        [HttpGet("{id}", Name = "GetOrder")]
         public ActionResult<Order> Get(string id)
         {
             var order = _orderService.Get(id);
@@ -44,7 +44,7 @@ namespace Api.Controllers
             return CreatedAtRoute("GetOrder", new { id = order.Id.ToString() }, order);
         }
 
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id}")]
         public IActionResult Update(string id, Order orderIn)
         {
             var order = _orderService.Get(id);
@@ -59,7 +59,7 @@ namespace Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
             var order = _orderService.Get(id);
