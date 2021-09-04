@@ -29,9 +29,7 @@ namespace Api.Controllers
             var order = _orderService.Get(id);
 
             if (order == null)
-            {
                 return NotFound();
-            }
 
             return order;
         }
@@ -50,9 +48,7 @@ namespace Api.Controllers
             var order = _orderService.Get(id);
 
             if (order == null)
-            {
                 return NotFound();
-            }
 
             _orderService.Update(id, orderIn);
 
@@ -65,9 +61,7 @@ namespace Api.Controllers
             var order = _orderService.Get(id);
 
             if (order == null)
-            {
                 return NotFound();
-            }
 
             _orderService.Remove(order.Id);
 

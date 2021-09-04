@@ -1,4 +1,5 @@
 ﻿using Data.Settings;
+using Infrastructure;
 using Infrastructure.Services;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -24,15 +25,14 @@ namespace Api
 
         public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            // Order Collection
-            services.Configure<OrderDatabaseSettings>(
-                configuration.GetSection(nameof(OrderDatabaseSettings)));
+            services.Configure<DatabaseSettings>(options =>
+            {
+                options.ConnectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
+                options.DatabaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
+            });
 
-            services.AddSingleton<IOrderDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<OrderDatabaseSettings>>().Value);
-
-            services.AddSingleton<OrderService>();
-            //
+            services.AddScoped<IDatabaseContext, DatabaseContext>();
+            services.AddScoped<OrderService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
