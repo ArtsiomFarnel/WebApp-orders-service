@@ -1,6 +1,6 @@
 ﻿using Data;
 using Infrastructure;
-using Infrastructure.Services;
+using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,16 +25,11 @@ namespace Api
 
         public static void ConfigureDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<DatabaseSettings>(options =>
-            {
-                options.ConnectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
-                options.DatabaseName = configuration.GetSection("DatabaseSettings:DatabaseName").Value;
-            });
+            services.Configure<DatabaseSettings>(configuration.GetSection("DatabaseSettings"));
 
-            services.AddScoped<IDatabaseContext, DatabaseContext>();
+            services.AddSingleton<IDatabaseContext, DatabaseContext>();
 
-            //Orders Collection
-            services.AddScoped<OrderService>();
+            services.AddScoped<IRepositoryManager, RepositoryManager>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)

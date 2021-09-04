@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson;
+﻿using Data.Attributes;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -6,10 +6,9 @@ using System.Text;
 
 namespace Data.Entities
 {
-    public class Order : IEntityBase
+    [BsonCollection("Orders")]
+    public class Order : EntityBase
     {
-        [BsonId]
-        public string Id { get; set; }
         public string ClientId { get; set; }
         public int ProductId { get; set; }
     }

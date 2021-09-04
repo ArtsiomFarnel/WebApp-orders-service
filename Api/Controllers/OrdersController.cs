@@ -1,5 +1,5 @@
 ﻿using Data.Entities;
-using Infrastructure.Services;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,23 +10,23 @@ namespace Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class OrdersController : ControllerBase
     {
-        private readonly OrderService _orderService;
+        private readonly IRepositoryManager _repository;
 
-        public HomeController(OrderService orderService)
+        public OrdersController(IRepositoryManager repository)
         {
-            _orderService = orderService;
+            _repository = repository;
         }
 
         [HttpGet]
         public ActionResult<List<Order>> Get() =>
-            _orderService.GetAll();
+            _repository.Orders.GetAll();
 
         [HttpGet("{id}", Name = "GetOrder")]
         public ActionResult<Order> Get(string id)
         {
-            var order = _orderService.GetOne(id);
+            var order = _repository.Orders.GetOne(id);
 
             if (order == null) return NotFound();
 
@@ -36,7 +36,7 @@ namespace Api.Controllers
         [HttpPost]
         public ActionResult<Order> Create(Order order)
         {
-            _orderService.Create(order);
+            _repository.Orders.Create(order);
 
             return CreatedAtRoute("GetOrder", new { id = order.Id.ToString() }, order);
         }
@@ -44,11 +44,11 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, Order orderIn)
         {
-            var order = _orderService.GetOne(id);
+            var order = _repository.Orders.GetOne(id);
 
             if (order == null) return NotFound();
 
-            _orderService.Update(id, orderIn);
+            _repository.Orders.Update(id, orderIn);
 
             return NoContent();
         }
@@ -56,11 +56,11 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            var order = _orderService.GetOne(id);
+            var order = _repository.Orders.GetOne(id);
 
             if (order == null) return NotFound();
 
-            _orderService.Remove(order.Id);
+            _repository.Orders.Remove(order.Id);
 
             return NoContent();
         }

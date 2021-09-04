@@ -15,12 +15,12 @@ namespace Infrastructure
     public class DatabaseContext : IDatabaseContext
     {
         private readonly IMongoDatabase _db;
-        private readonly IMongoClient _mongoClient;
+        private readonly IMongoClient _сlient;
 
         public DatabaseContext(IOptions<DatabaseSettings> configuration)
         {
-            _mongoClient = new MongoClient(configuration.Value.ConnectionString);
-            _db = _mongoClient.GetDatabase(configuration.Value.DatabaseName);
+            _сlient = new MongoClient(configuration.Value.ConnectionString);
+            _db = _сlient.GetDatabase(configuration.Value.DatabaseName);
         }
 
         public IMongoCollection<T> GetCollection<T>(string name) =>
