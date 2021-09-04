@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Settings
+namespace Data
 {
     public interface IDatabaseSettings
     {

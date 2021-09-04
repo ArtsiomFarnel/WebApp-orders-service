@@ -1,5 +1,4 @@
 ﻿using Data.Entities;
-using Data.Settings;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -16,10 +15,10 @@ namespace Infrastructure.Services
             _orders = context.GetCollection<Order>("Orders");
         }
 
-        public List<Order> Get() =>
+        public List<Order> GetAll() =>
             _orders.Find(o => true).ToList();
 
-        public Order Get(string id) =>
+        public Order GetOne(string id) =>
             _orders.Find(o => o.Id == id).FirstOrDefault();
 
         public void Create(Order order) =>

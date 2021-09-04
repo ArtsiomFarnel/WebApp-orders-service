@@ -21,15 +21,14 @@ namespace Api.Controllers
 
         [HttpGet]
         public ActionResult<List<Order>> Get() =>
-            _orderService.Get();
+            _orderService.GetAll();
 
         [HttpGet("{id}", Name = "GetOrder")]
         public ActionResult<Order> Get(string id)
         {
-            var order = _orderService.Get(id);
+            var order = _orderService.GetOne(id);
 
-            if (order == null)
-                return NotFound();
+            if (order == null) return NotFound();
 
             return order;
         }
@@ -45,10 +44,9 @@ namespace Api.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(string id, Order orderIn)
         {
-            var order = _orderService.Get(id);
+            var order = _orderService.GetOne(id);
 
-            if (order == null)
-                return NotFound();
+            if (order == null) return NotFound();
 
             _orderService.Update(id, orderIn);
 
@@ -58,10 +56,9 @@ namespace Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
-            var order = _orderService.Get(id);
+            var order = _orderService.GetOne(id);
 
-            if (order == null)
-                return NotFound();
+            if (order == null) return NotFound();
 
             _orderService.Remove(order.Id);
 
