@@ -7,7 +7,7 @@ namespace Infrastructure
 {
     public interface IRepositoryManager
     {
-        IOrderRepository Orders { get; }
+        public IOrderRepository Orders { get; }
     }
 
     public class RepositoryManager : IRepositoryManager
