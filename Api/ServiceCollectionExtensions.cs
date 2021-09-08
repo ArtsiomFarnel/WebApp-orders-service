@@ -1,6 +1,9 @@
-﻿using Data;
+﻿using Application.Services;
+using Data;
+using GreenPipes;
 using Infrastructure;
 using Infrastructure.Repositories;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +41,29 @@ namespace Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orders microservice", Version = "v1" });
             });
+        }
+
+        public static void ConfigureMassTransit(this IServiceCollection services)
+        {
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<OrderConsumer>();
+                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+                    cfg.Host(new Uri("rabbitmq://localhost"), h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ReceiveEndpoint("orders", ep =>
+                    {
+                        ep.PrefetchCount = 16;
+                        ep.UseMessageRetry(r => r.Interval(2, 100));
+                        ep.ConfigureConsumer<OrderConsumer>(provider);
+                    });
+                }));
+            });
+            services.AddMassTransitHostedService();
         }
     }
 }

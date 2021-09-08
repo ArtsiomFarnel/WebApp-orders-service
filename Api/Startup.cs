@@ -27,7 +27,8 @@ namespace Api
         {
             services.ConfigureControllers();
             services.ConfigureDatabase(Configuration);
-            services.ConfigureMediatR();
+            //services.ConfigureMediatR();
+            services.ConfigureMassTransit();
             services.ConfigureSwagger();
         }
 
