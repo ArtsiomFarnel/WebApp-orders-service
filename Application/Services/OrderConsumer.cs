@@ -12,7 +12,7 @@ namespace Application.Services
         public async Task Consume(ConsumeContext<Order> context)
         {
             var data = context.Message;
-            Console.WriteLine("!!!!!!!!");
+            await Console.Out.WriteLineAsync(data.ClientId);
         }
     }
 }

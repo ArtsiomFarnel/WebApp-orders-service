@@ -48,7 +48,7 @@ namespace Api
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<OrderConsumer>();
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
+                x.UsingRabbitMq((ctx, cfg) =>
                 {
                     cfg.Host(new Uri("rabbitmq://localhost"), h =>
                     {
@@ -57,12 +57,12 @@ namespace Api
                     });
                     cfg.ReceiveEndpoint("orders", ep =>
                     {
-                        ep.PrefetchCount = 16;
-                        ep.UseMessageRetry(r => r.Interval(2, 100));
-                        ep.ConfigureConsumer<OrderConsumer>(provider);
+                        ep.ConfigureConsumer<OrderConsumer>(ctx);
                     });
-                }));
+                });
+
             });
+
             services.AddMassTransitHostedService();
         }
     }
