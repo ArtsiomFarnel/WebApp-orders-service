@@ -13,8 +13,8 @@ namespace Infrastructure.Repositories
         public List<TEntity> GetAll();
         public TEntity GetOne(string id);
         public void Create(TEntity entity);
-        public void Update(string id, TEntity entity);
-        public void Remove(string id);
+        public void Update(TEntity entity);
+        public void Remove(TEntity entity);
     }
 
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : IEntityBase
@@ -43,10 +43,10 @@ namespace Infrastructure.Repositories
         public void Create(TEntity entity) =>
             _collection.InsertOne(entity);
 
-        public void Update(string id, TEntity entity) =>
-            _collection.ReplaceOne(o => o.Id == id, entity);
+        public void Update(TEntity entity) =>
+            _collection.ReplaceOne(o => o.Id == entity.Id, entity);
 
-        public void Remove(string id) =>
-            _collection.DeleteOne(o => o.Id == id);
+        public void Remove(TEntity entity) =>
+            _collection.DeleteOne(o => o.Id == entity.Id);
     }
 }

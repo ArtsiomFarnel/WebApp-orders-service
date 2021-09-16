@@ -42,25 +42,25 @@ namespace Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(string id, Order orderIn)
+        public IActionResult Update(Order orderIn)
         {
-            var order = _repository.Orders.GetOne(id);
+            var order = _repository.Orders.GetOne(orderIn.Id);
 
             if (order == null) return NotFound();
 
-            _repository.Orders.Update(id, orderIn);
+            _repository.Orders.Update(orderIn);
 
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(Order orderIn)
         {
-            var order = _repository.Orders.GetOne(id);
+            var order = _repository.Orders.GetOne(orderIn.Id);
 
             if (order == null) return NotFound();
 
-            _repository.Orders.Remove(order.Id);
+            _repository.Orders.Remove(order);
 
             return NoContent();
         }

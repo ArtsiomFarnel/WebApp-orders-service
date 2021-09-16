@@ -11,5 +11,6 @@ namespace Data.Entities
     {
         public string ClientId { get; set; }
         public int ProductId { get; set; }
+        public string Status { get; set; }
     }
 }
