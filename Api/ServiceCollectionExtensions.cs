@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MessageBrokerShared;
 
 namespace Api
 {
@@ -50,12 +51,12 @@ namespace Api
                 x.AddConsumer<OrderConsumer>();
                 x.UsingRabbitMq((ctx, cfg) =>
                 {
-                    cfg.Host(new Uri("rabbitmq://localhost"), h =>
+                    cfg.Host(new Uri(MassTransitConfiguration.Uri), h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(MassTransitConfiguration.UserName);
+                        h.Password(MassTransitConfiguration.Password);
                     });
-                    cfg.ReceiveEndpoint("orders", ep =>
+                    cfg.ReceiveEndpoint(MassTransitConfiguration.QueueName, ep =>
                     {
                         ep.ConfigureConsumer<OrderConsumer>(ctx);
                     });

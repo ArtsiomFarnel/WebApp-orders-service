@@ -5,14 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MessageBrokerShared\MessageBrokerShared.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Abstractions\" />
-    <Folder Include="Contracts\DataTransferObjects\" />
     <Folder Include="Features\Commands\" />
     <Folder Include="Features\Queries\" />
+    <Folder Include="Models\DataTransferObjects\" />
   </ItemGroup>
 
   <ItemGroup>
